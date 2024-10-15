@@ -26,10 +26,6 @@ with st.form("Aggiungi Utente Sportello"):
     sex = st.selectbox("**Sesso**", options=sex_list, 
                        help="Sesso dell'utente")
     st.write(f'Sesso: {sex}')
-    # GENERE
-    gender = st.text_input("**Genere**",  value="",
-                            help="Genere dell'utente, testo libero per descrivere il genere")
-    st.write(f'Genere: {gender}')
     # INDIRIZZO
     address = st.text_input("**Indirizzo (Obbligatorio)**", value="",
                             help="Indirizzo dell'utente (obbligatorio), possibilmente specificare la via")
