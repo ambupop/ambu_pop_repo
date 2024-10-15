@@ -11,7 +11,7 @@ connector = PostGresConnector(
 
 
 def get_values_selectbox():
-    if st.session_state.variable == 'sesso':
+    if st.session_state.variable == 'sesso_genere':
         value = st.selectbox('**Sesso**', options=sex_list)
     elif st.session_state.variable == 'modalità_accesso':
         value = st.selectbox('**Modalità di accesso**', options=access_list)
@@ -30,7 +30,8 @@ def get_values_selectbox():
         value = st.date_input("**Data Riscontro**", value=pd.Timestamp.now().date(),
                               max_value=pd.Timestamp.now().date())
     elif st.session_state.variable == 'età':
-        value = st.slider("**Età (Obbligatorio)**", value=0)
+        value = st.number_input("**Età (Obbligatorio)**", min_value=0, max_value=150,
+                                value="min")
     else:
         value = st.text_input(f'**{st.session_state.variable}**', value="")
     return value

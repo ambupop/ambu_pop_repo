@@ -2,7 +2,6 @@ import psycopg2
 import enum
 import pandas as pd
 import os
-from sqlalchemy import create_engine
 from datetime import datetime as dt
 import logging
 

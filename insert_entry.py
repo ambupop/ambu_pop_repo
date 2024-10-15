@@ -18,9 +18,9 @@ with st.form("Aggiungi Utente Sportello"):
                             help="Cognome dell'utente (obbligatorio)")
     st.write(f'Cognome: {surname}')
     # ETA'
-    age = st.slider("**Età (Obbligatorio)**", value=0,
-                    help="""Età dell'utente (obbligatorio), nel caso non venga dichiarata
-                            inserirne un spannometrica""")
+    age = st.number_input("**Età (Obbligatorio)**", min_value=0, max_value=150, value="min",
+                          help="""Età dell'utente (obbligatorio), nel caso non venga dichiarata
+                               inserirne un spannometrica""")
     st.write(f'Età: {age}')
     # SESSO
     sex = st.selectbox("**Sesso**", options=sex_list, 
@@ -65,6 +65,14 @@ with st.form("Aggiungi Utente Sportello"):
         st.write(f'Problema di accesso (altro): {access_problem_altro}')
     else:
         access_problem_altro = None
+    # PRESTAZIONE RICHIESTA/SERVIZIO (OBBLIGATORIA)
+    service = st.text_input("**Prestazione richiesta/Servizio**", value="",
+                            help="Specifica la prestazione richiesta o il servizio richiesto")
+    st.write(f'Prestazione richiesta/Servizio: {service}')
+    # CODICE PRESTAZIONE
+    service_code = st.text_input("**Codice Prestazione**", value="",
+                                 help="Codice della prestazione diversa")
+    st.write(f'Codice prestazione: {service_code}')
     # AZIONI INTRAPRESE
     actions = st.text_input("**Azioni intraprese**", value="", 
                             help="Specificare le azioni intraprese")
@@ -112,8 +120,7 @@ with st.form("Aggiungi Utente Sportello"):
         'nome': name,
         'cognome': surname,
         'età': age,
-        'sesso': sex if sex != "" else None,
-        'genere': gender if gender != "" else None,
+        'sesso_genere': sex if sex != "" else None,
         'indirizzo': address,
         'città': city if city != "" else None,
         'contatto': contact,
@@ -123,6 +130,8 @@ with st.form("Aggiungi Utente Sportello"):
         'problema_accesso': access_problem,
         'problema_di_accesso_altro': access_problem_altro if access_problem_altro != "" else None,
         'azioni_intraprese': actions if actions != "" else None,
+        'prestazione_richiesta': service,
+        'codice_prestazione': service_code if service_code != "" else None,
         'ente_coinvolto': involved_entity if involved_entity != "" else None,
         'ente_coinvolto_altro': involved_entity_altro if involved_entity_altro != "" else None,
         'struttura_coinvolta': involved_structure if involved_structure != "" else None,

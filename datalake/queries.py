@@ -1,5 +1,5 @@
 create_sesso_enum = """
-    CREATE TYPE sesso_enum AS ENUM ('M', 'F', 'Altro');
+    CREATE TYPE sesso_enum AS ENUM ('M', 'F', 'Non Binario', 'Altro');
 """
 
 create_modalità_accesso_enum = """
@@ -31,8 +31,7 @@ create_anagrafica_table = """
         nome VARCHAR NOT NULL,
         cognome VARCHAR NOT NULL,
         età INTEGER NOT NULL,
-        sesso sesso_enum,
-        genere VARCHAR,
+        sesso_genere sesso_enum,
         indirizzo VARCHAR NOT NULL,
         città VARCHAR,
         contatto VARCHAR NOT NULL,
@@ -41,6 +40,8 @@ create_anagrafica_table = """
         descrizione_problema_accesso TEXT NOT NULL,
         problema_accesso problema_accesso_enum NOT NULL,
         problema_di_accesso_altro VARCHAR,
+        prestazione_richiesta VARCHAR NOT NULL,
+        codice_prestazione VARCHAR,
         azioni_intraprese VARCHAR,
         ente_coinvolto ente_coinvolto_enum,
         ente_coinvolto_altro VARCHAR,

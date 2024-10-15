@@ -10,7 +10,7 @@ def check_mandatory_fields_new_entry(x: dict) -> bool:
     :return: True if all mandatory fields are filled, False otherwise    
     """
     mandatory_fields = ['nome', 'cognome', 'età', 'indirizzo', 'contatto', 'problema_accesso',
-                        'descrizione_problema_accesso']
+                        'prestazione_richiesta', 'descrizione_problema_accesso']
 
     for field in mandatory_fields:
         if (x[field] == '') or (x[field] is None):
