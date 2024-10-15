@@ -17,11 +17,11 @@ create_problem_accesso_enum = """
 """
 
 create_ente_coinvolto_enum = """
-    CREATE TYPE ente_coinvolto_enum AS ENUM ('ASL', 'Municipio', 'Comune', 'Altro');
+    CREATE TYPE ente_coinvolto_enum AS ENUM ('Regione', 'Municipio', 'Comune', 'Altro');
 """
 
 create_riscontro_enum = """
-    CREATE TYPE riscontro_enum AS ENUM ('In corso', 'Positivo', 'Negativo');
+    CREATE TYPE riscontro_enum AS ENUM ('In corso', 'Positivo', 'Negativo', 'Parziale');
 """
 
 create_anagrafica_table = """
