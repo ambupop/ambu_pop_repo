@@ -14,5 +14,8 @@ st.write(f'Username: {username}')
 
 if st.button("Elimina Utente Dashboard"):
     sql_query = f"DELETE FROM user_table WHERE username = '{username}'" 
-    connector.run_query(sql_query=sql_query)
+    try:
+        connector.run_query(sql_query=sql_query)
+    except Exception as e:
+        st.error(f"Error saving: {e}")
     st.write(f"Utente con Username {username} eliminato con successo")
