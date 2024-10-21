@@ -33,6 +33,7 @@ class PostGresConnector():
             logging.info(f"Query executed: {sql_query}")
         except Exception as e:
             logging.error(f"Error in run_query: {e}")
+            raise e
         finally:
             cursor.close() if cursor else None
 

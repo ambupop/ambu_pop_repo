@@ -156,7 +156,7 @@ if button_save:
     try:
         logging.info(f"Inserting new user: {new_entry}")
         connector.run_query(sql_query)
-        logging.error(f"User inserted: {new_entry}")
+        logging.info(f"User inserted: {new_entry}")
     except Exception as e:
         st.error(f"Errore durante il salvataggio dell'utente: {e}")
     st.write("Utente Salvato")

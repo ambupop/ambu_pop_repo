@@ -10,7 +10,7 @@ def main():
           layout='wide' if st.session_state.get('layout_mode', False) else 'centered'
     )
     st.title("Sportello Sanitario")
-    # set_bg_hack('/Users/a465265/VT/frontend_VT/images/villa_tiburtina.png')
+    # set_bg_hack('/Users/a465265/VT/frontend_VT/images/villa_tiburtina.png')
 
     # Add user_state
     if 'user_state' not in st.session_state:
@@ -21,9 +21,9 @@ def main():
         }
     
     if not st.session_state.user_state['logged_in']:
-        st.write("Effettua l'accesso")
-        username = st.text_input("Username")
-        password = st.text_input("Password", type='password')
+        st.markdown("**Effettua l'accesso**")
+        username = st.text_input("**Username**")
+        password = st.text_input("**Password**", type='password')
         submit = st.button("Accedi")
         connector = PostGresConnector(connection_str=connection_str)
         user_table = connector.select_query(query_sql=select_user_table)
