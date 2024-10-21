@@ -30,6 +30,9 @@ st.write(f'ID: {id}')
 
 if st.button("Elimina"):
     sql_query = f"DELETE FROM anagrafica_sportello WHERE sq_id = '{id}'" 
-    connector.run_query(sql_query=sql_query)
+    try:
+        connector.run_query(sql_query=sql_query)
+    except Exception as e:
+        st.error(f"Error {e}")
     st.write(f"Utente con ID {id} eliminato con successo")
     st.rerun()
