@@ -135,7 +135,7 @@ with st.form("Aggiungi Utente Sportello"):
         'contatto': replace_apostrophe(contact),
         'modalità_accesso': replace_apostrophe(access_modality) if access_modality != "" else None,
         'conoscenza_sportello': know_how if know_how != "" else None,
-        'conoscenza_sportello_altro': replace_apostrophe(know_how_altro) if know_how_altro != "" else None,
+        'conoscenza_sportello_altro': know_how_altro if know_how_altro != "" else None,
         'descrizione_problema_accesso': replace_apostrophe(summary),
         'problema_accesso': '; '.join(access_problem),
         'problema_di_accesso_altro': replace_apostrophe(access_problem_altro) if access_problem_altro != "" else None,
