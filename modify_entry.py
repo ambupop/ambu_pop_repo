@@ -4,6 +4,7 @@ from utils.variables import (connection_str)
 from datalake.dbconnector import PostGresConnector
 from utils.variables import (variables_list, sex_list, access_list, know_list, access_problem_list, 
                              ente_list, status_list)
+from utils.utils import replace_apostrophe
 
 connector = PostGresConnector(
     connection_str=connection_str
@@ -64,6 +65,9 @@ st.write(f'Variabile: {variable}')
 st.session_state.variable = variable
 
 value = get_values_selectbox()
+if isinstance(value, str):
+    value = replace_apostrophe(value)
+
 st.write(f'Valore: {value}')
 
 if st.button("Modifica"):
