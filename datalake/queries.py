@@ -7,7 +7,7 @@ create_modalità_accesso_enum = """
 """
 
 create_conoscenza_sportello_enum = """
-    CREATE TYPE conoscenza_sportello_enum AS ENUM ('Iniziative', 'Volantinaggio', 'Passaparola');
+    CREATE TYPE conoscenza_sportello_enum AS ENUM ('Iniziative', 'Volantinaggio', 'Passaparola', 'Altro');
 """
 
 create_problem_accesso_enum = """
@@ -37,8 +37,9 @@ create_anagrafica_table = """
         contatto VARCHAR NOT NULL,
         modalità_accesso modalità_accesso_enum,
         conoscenza_sportello conoscenza_sportello_enum,
+        conoscenza_sportello_altro TEXT,
         descrizione_problema_accesso TEXT NOT NULL,
-        problema_accesso problema_accesso_enum NOT NULL,
+        problema_accesso TEXT NOT NULL,
         problema_di_accesso_altro VARCHAR,
         prestazione_richiesta VARCHAR NOT NULL,
         codice_prestazione VARCHAR,

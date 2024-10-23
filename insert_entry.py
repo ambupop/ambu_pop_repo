@@ -5,10 +5,13 @@ from datalake.dbconnector import PostGresConnector
 from utils.variables import (connection_str, sex_list, access_list, know_list,
                              access_problem_list, ente_list, status_list)
 from utils.utils import (check_mandatory_fields_new_entry, check_consistency_altro_fields,
-                         generate_insert_statement_anagrafica_sportello)
+                         generate_insert_statement_anagrafica_sportello, replace_apostrophe)
 
 with st.form("Aggiungi Utente Sportello"):
     st.write("**Inserisci i dati dell'utente**")
+    # DATA INSERIMENTO
+    insert_date = st.date_input("**Data Inserimento**", value=pd.Timestamp.now().date(),
+                                max_value=pd.Timestamp.now().date())
     # NOME
     name = st.text_input('**Nome (Obbligatorio)**', value="", 
                          help="Nome dell'utente (obbligatorio)")
@@ -42,20 +45,28 @@ with st.form("Aggiungi Utente Sportello"):
     access_modality = st.selectbox("**Modalità di accesso**", options=access_list,
                                     help="Modalità di accesso allo sportello")
     st.write(f'Modalità di accesso: {access_modality}')
-    # CONOSCENZA SPORTLLO
+    # CONOSCENZA SPORTELLO
     know_how = st.selectbox("**Conoscenza Sportello**", options=know_list,
-                                help="Come è venuto a conoscienza dello sportello")
+                            help="Come è venuto a conoscienza dello sportello")
     st.write(f'Conoscenza Sportello: {know_how}')
+    # CONOSCENZA SPORTELLO ALTRO
+    if know_how == "Altro":
+        know_how_altro = st.text_input("**Specificare conoscenza sportello altro**", value="",
+                                       help="Specificare la modalità di conoscenza sportello se non in lista")
+        st.write(f"Conoscenza sportello (altro): {know_how_altro}")
+    else:
+        know_how_altro = None
     # DESCRIZIONE PROBLEMA DI ACCESSO
     summary = st.text_input("**Descrizione del problema di accesso (Obbligatorio)**", value="",
                             help="Descrizione del problema di accesso (obbligatorio)")
     st.write(f'Descrizione del problema di accesso: {summary}')
     # PROBLEMA DI ACCESSO
-    access_problem = st.selectbox("**Problema di accesso (Obbligatorio)**", options=access_problem_list,
+    access_problem = st.multiselect("**Problema di accesso (Obbligatorio)**", 
+                                    options=access_problem_list,
                                     help="Seleziona una categoria di problema di accesso")
     st.write(f'Problema di accesso: {access_problem}')
     # PROBLEMA DI ACCESSO ALTRO
-    if access_problem == "Altro":
+    if "Altro" in access_problem:
         access_problem_altro = st.text_input("**Specificare il problema**", value="", 
                                         help="Specificare il problema di accesso se non presente in lista")
         st.write(f'Problema di accesso (altro): {access_problem_altro}')
@@ -83,7 +94,9 @@ with st.form("Aggiungi Utente Sportello"):
                                               help="Specificare l'ente coinvolto se non presente in lista")
         st.write(f'Ente coinvolto (altro): {involved_entity_altro}')
     else:
-        involved_entity_altro = None
+        involved_entity_altro = st.text_input("**Indicare la sezione competente dell'ente**", value="",
+                                              help="Idicare la sezione competente dell'ente")
+        st.write(f'Sezione competente: {involved_entity_altro}')
     # STRUTTURA COINVOLTA
     involved_structure = st.text_input("**Struttura coinvolta**", value="", 
                                         help="Specificare la struttura coinvolta")
@@ -112,28 +125,29 @@ with st.form("Aggiungi Utente Sportello"):
     button_save = st.form_submit_button("Salva Utente")
 
     new_entry= {
-        'data_inserimento': pd.Timestamp.now().date().strftime("%Y-%m-%d"),
-        'nome': name,
-        'cognome': surname,
+        'data_inserimento': insert_date,
+        'nome': replace_apostrophe(name),
+        'cognome': replace_apostrophe(surname),
         'età': age,
         'sesso_genere': sex if sex != "" else None,
-        'indirizzo': address,
-        'città': city if city != "" else None,
-        'contatto': contact,
-        'modalità_accesso': access_modality if access_modality != "" else None,
+        'indirizzo': replace_apostrophe(address),
+        'città': replace_apostrophe(city) if city != "" else None,
+        'contatto': replace_apostrophe(contact),
+        'modalità_accesso': replace_apostrophe(access_modality) if access_modality != "" else None,
         'conoscenza_sportello': know_how if know_how != "" else None,
-        'descrizione_problema_accesso': summary,
-        'problema_accesso': access_problem,
-        'problema_di_accesso_altro': access_problem_altro if access_problem_altro != "" else None,
-        'azioni_intraprese': actions if actions != "" else None,
-        'prestazione_richiesta': service,
-        'codice_prestazione': service_code if service_code != "" else None,
-        'ente_coinvolto': involved_entity if involved_entity != "" else None,
-        'ente_coinvolto_altro': involved_entity_altro if involved_entity_altro != "" else None,
-        'struttura_coinvolta': involved_structure if involved_structure != "" else None,
-        'documentazione': documentation if documentation != "" else None,
+        'conoscenza_sportello_altro': replace_apostrophe(know_how_altro) if know_how_altro != "" else None,
+        'descrizione_problema_accesso': replace_apostrophe(summary),
+        'problema_accesso': '; '.join(access_problem),
+        'problema_di_accesso_altro': replace_apostrophe(access_problem_altro) if access_problem_altro != "" else None,
+        'azioni_intraprese': replace_apostrophe(actions) if actions != "" else None,
+        'prestazione_richiesta': replace_apostrophe(service),
+        'codice_prestazione': replace_apostrophe(service_code) if service_code != "" else None,
+        'ente_coinvolto': replace_apostrophe(involved_entity) if involved_entity != "" else None,
+        'ente_coinvolto_altro': replace_apostrophe(involved_entity_altro) if involved_entity_altro != "" else None,
+        'struttura_coinvolta': replace_apostrophe(involved_structure) if involved_structure != "" else None,
+        'documentazione': replace_apostrophe(documentation) if documentation != "" else None,
         'riscontro': status,
-        'note_riscontro': notes if notes != "" else None,
+        'note_riscontro': replace_apostrophe(notes) if notes != "" else None,
         'data_riscontro': status_date}
 
 

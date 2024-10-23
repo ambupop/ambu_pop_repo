@@ -18,7 +18,7 @@ def get_values_selectbox():
     elif st.session_state.variable == 'conoscenza_sportello':
         value = st.selectbox('**Conoscenza Sportello**', options=know_list)
     elif st.session_state.variable == 'problema_accesso':
-        value = st.selectbox('**Problema di accesso**', options=access_problem_list)
+        value = st.multiselect('**Problema di accesso**', options=access_problem_list)
     elif st.session_state.variable == 'ente_coinvolto':
         value = st.selectbox('**Ente Coinvolto**', options=ente_list)
     elif st.session_state.variable == 'riscontro':
