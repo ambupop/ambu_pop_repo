@@ -53,8 +53,11 @@ def generate_insert_statement_anagrafica_sportello(new_entry: dict) -> str:
     return sql_query
 
 def replace_apostrophe(text: str):
-    return text.replace("'", "*")
-
+    if isinstance(text, str):
+        return text.replace("'", "*")
+    else:
+        return text
+    
 def set_bg_hack(main_bg):
     """
     Unpack an image from root folder and set as bg
